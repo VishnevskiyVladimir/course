@@ -1,24 +1,42 @@
-package com.kavgorodov.course.shared.dto;
+package com.kavgorodov.course.io.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
+import java.nio.charset.UnmappableCharacterException;
 
 /**
  * @author Vladimir Vishnevskiy
  */
-public class UserDto implements Serializable {
 
+@Entity
+@Table(name = "users")
+public class UserEntity implements Serializable {
 
-    private static final long serialVersionUID = 7262332315293892573L;
+    private static final long serialVersionUID = -3520684035382281179L;
+
+    @Id
+    @GeneratedValue
     private long id;
+
+    @Column(nullable = false)
     private String userId;
+
+    @Column(nullable = false, length = 50)
     private String firstName;
+    @Column(nullable = false, length = 50)
     private String lastName;
+    @Column(nullable = false, length = 120)
     private String email;
-    private String password;
+
     private String encryptedPassword;
     private String emailVerificationToken;
-    private Boolean emailVerificationStatus = false;
 
+    @Column(nullable = false)
+    private Boolean emailVerificationStatus = false;
 
     public long getId() {
         return id;
@@ -58,14 +76,6 @@ public class UserDto implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getEncryptedPassword() {
