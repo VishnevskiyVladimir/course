@@ -1,9 +1,11 @@
 package com.kavgorodov.course.ui.controller;
 
+import com.kavgorodov.course.service.UserService;
 import com.kavgorodov.course.shared.dto.UserDto;
 import com.kavgorodov.course.ui.model.request.UserDetailsRequestModel;
 import com.kavgorodov.course.ui.model.response.UserRest;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/user")
 class UserController {
+
+    @Autowired
+    UserService userService;
 
     @GetMapping
     public String getUser() {
