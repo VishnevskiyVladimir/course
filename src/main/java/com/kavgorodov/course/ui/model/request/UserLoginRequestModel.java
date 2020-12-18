@@ -3,7 +3,7 @@ package com.kavgorodov.course.ui.model.request;
 /**
  * @author Vladimir Vishnevskiy
  */
-class UserLoginRequestModel {
+public class UserLoginRequestModel {
     private String email;
     private String password;
 
