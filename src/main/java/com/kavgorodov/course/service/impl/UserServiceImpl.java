@@ -1,6 +1,6 @@
 package com.kavgorodov.course.service.impl;
 
-import com.kavgorodov.course.UserRepository;
+import com.kavgorodov.course.io.repository.UserRepository;
 import com.kavgorodov.course.io.entity.UserEntity;
 import com.kavgorodov.course.service.UserService;
 import com.kavgorodov.course.shared.dto.UserDto;
@@ -44,6 +44,15 @@ public class UserServiceImpl implements UserService {
         UserDto returnValue = new UserDto();
         BeanUtils.copyProperties(storedUserDetails, returnValue);
 
+        return returnValue;
+    }
+
+    @Override
+    public UserDto getUser(String email) {
+        UserEntity userEntity = userRepository.findByEmail(email);
+        if(userEntity == null) {throw new UsernameNotFoundException(email);}
+        UserDto returnValue = new UserDto();
+        BeanUtils.copyProperties(userEntity, returnValue);
         return returnValue;
     }
 

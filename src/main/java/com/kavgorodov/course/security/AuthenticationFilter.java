@@ -1,6 +1,9 @@
 package com.kavgorodov.course.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kavgorodov.course.SpringApplicationContext;
+import com.kavgorodov.course.service.UserService;
+import com.kavgorodov.course.shared.dto.UserDto;
 import com.kavgorodov.course.ui.model.request.UserLoginRequestModel;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -63,7 +66,9 @@ class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                 .signWith(SignatureAlgorithm.HS512, SecurityConstants.TOKEN_SECRET)
                 .compact();
 
+        UserService userService = (UserService) SpringApplicationContext.getBean("userServiceImpl");
+        UserDto userDto = userService.getUser(userName);
         res.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX + token);
-
+        res.addHeader("User Id", userDto.getUserId());
     }
 }

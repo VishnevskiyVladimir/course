@@ -17,4 +17,9 @@ public class CourseApplication {
 		return new BCryptPasswordEncoder();
 	}
 
+	@Bean
+	SpringApplicationContext springApplicationContext() {
+		return  new SpringApplicationContext();
+	}
+
 }

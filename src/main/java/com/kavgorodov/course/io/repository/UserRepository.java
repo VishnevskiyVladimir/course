@@ -1,4 +1,4 @@
-package com.kavgorodov.course;
+package com.kavgorodov.course.io.repository;
 
 import com.kavgorodov.course.io.entity.UserEntity;
 import org.springframework.data.repository.CrudRepository;
