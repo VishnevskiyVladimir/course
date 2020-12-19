@@ -3,6 +3,7 @@ package com.kavgorodov.course.service.impl;
 import com.kavgorodov.course.io.repository.UserRepository;
 import com.kavgorodov.course.io.entity.UserEntity;
 import com.kavgorodov.course.service.UserService;
+import com.kavgorodov.course.shared.Utils;
 import com.kavgorodov.course.shared.dto.UserDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     @Autowired
+    Utils utils;
+
+    @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
@@ -37,7 +41,9 @@ public class UserServiceImpl implements UserService {
         BeanUtils.copyProperties(user, userEntity);
 
         userEntity.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userEntity.setUserId("testUserId");
+
+        String publicUserId = utils.generateUserId(30);
+        userEntity.setUserId(publicUserId);
 
         UserEntity storedUserDetails = userRepository.save(userEntity);
 

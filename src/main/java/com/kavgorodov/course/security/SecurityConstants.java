@@ -9,6 +9,11 @@ public class SecurityConstants {
     public static final String SIGN_UP_URL = "/users";
     public static final String TOKEN_SECRET = "jf9i.";
 
+
+    // не уверен что именно так реализованно
+    public static String getTokenSecret() {
+        return TOKEN_SECRET;
+    }
 //    public static final String VERIFICATION_EMAIL_URL = "/users/email-verification";
 //    public static final String PASSWORD_RESET_REQUEST_URL = "/users/password-reset-request";
 //    public static final String PASSWORD_RESET_URL = "/users/password-reset";
