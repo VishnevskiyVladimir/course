@@ -1,5 +1,6 @@
 package com.kavgorodov.course.ui.controller;
 
+import com.kavgorodov.course.exception.UserServiceException;
 import com.kavgorodov.course.service.UserService;
 import com.kavgorodov.course.shared.dto.UserDto;
 import com.kavgorodov.course.ui.model.request.UserDetailsRequestModel;
@@ -45,7 +46,7 @@ class UserController {
     public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) throws Exception {
 
         //Don't confuse empty with null
-        if(userDetails.getEmail().isEmpty()) throw new Exception(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
+        if(userDetails.getEmail().isEmpty()) throw new UserServiceException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
 
 
         UserRest returnValue = new UserRest();

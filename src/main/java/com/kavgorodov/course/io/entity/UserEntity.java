@@ -6,7 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.nio.charset.UnmappableCharacterException;
 
 /**
  * @author Vladimir Vishnevskiy
