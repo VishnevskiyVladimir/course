@@ -6,6 +6,7 @@ import com.kavgorodov.course.ui.model.request.UserDetailsRequestModel;
 import com.kavgorodov.course.ui.model.response.UserRest;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
+// Можно настроить на XML весь контроллер, а можно только один endpoint
+// Можно ограничить кол-во медиатайпов указав их массивом {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE}
+// В таком случае если медиатайп не указан в хедере, контроллер вернет первый медиатайп
+// Точно также можно настроиь consumes
 class UserController {
 
     @Autowired
