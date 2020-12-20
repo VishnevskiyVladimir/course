@@ -3,6 +3,7 @@ package com.kavgorodov.course.ui.controller;
 import com.kavgorodov.course.service.UserService;
 import com.kavgorodov.course.shared.dto.UserDto;
 import com.kavgorodov.course.ui.model.request.UserDetailsRequestModel;
+import com.kavgorodov.course.ui.model.response.ErrorMessages;
 import com.kavgorodov.course.ui.model.response.UserRest;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,11 @@ class UserController {
     }
 
     @PostMapping
-    public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) {
+    public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) throws Exception {
+
+        //Don't confuse empty with null
+        if(userDetails.getEmail().isEmpty()) throw new Exception(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
+
 
         UserRest returnValue = new UserRest();
         UserDto userDto = new UserDto();

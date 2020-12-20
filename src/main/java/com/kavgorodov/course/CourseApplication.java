@@ -9,6 +9,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @SpringBootApplication
 public class CourseApplication {
 
+
+	/*
+	To do:
+	1)Add error messages to properties file, not to change java code
+	X)Add custom search by Baeldung
+	 */
+
 	public static void main(String[] args) {
 		SpringApplication.run(CourseApplication.class, args);
 	}
