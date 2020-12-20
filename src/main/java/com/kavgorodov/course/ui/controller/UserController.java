@@ -46,6 +46,7 @@ class UserController {
     public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) throws Exception {
 
         //Don't confuse empty with null
+        if(userDetails.getEmail()==null) throw new NullPointerException("The object is null");
         if(userDetails.getEmail().isEmpty()) throw new UserServiceException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
 
 
