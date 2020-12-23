@@ -8,6 +8,7 @@ import com.kavgorodov.course.ui.model.response.ErrorMessages;
 import com.kavgorodov.course.ui.model.response.OperationStatusModel;
 import com.kavgorodov.course.ui.model.response.RequestOperationStatus;
 import com.kavgorodov.course.ui.model.response.UserRest;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -59,10 +60,12 @@ class UserController {
 
 
         UserRest returnValue = new UserRest();
-        UserDto userDto = new UserDto();
-        BeanUtils.copyProperties(userDetails, userDto);
+
+        ModelMapper modelMapper = new ModelMapper();
+        UserDto userDto = modelMapper.map(userDetails, UserDto.class);
+
         UserDto createdUser = userService.createUser(userDto);
-        BeanUtils.copyProperties(createdUser, returnValue);
+        returnValue = modelMapper.map(createdUser, UserRest.class);
 
         return returnValue;
     }
