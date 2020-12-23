@@ -5,9 +5,11 @@ import com.kavgorodov.course.io.entity.UserEntity;
 import com.kavgorodov.course.io.repository.UserRepository;
 import com.kavgorodov.course.service.UserService;
 import com.kavgorodov.course.shared.Utils;
+import com.kavgorodov.course.shared.dto.AddressDTO;
 import com.kavgorodov.course.shared.dto.UserDto;
 import com.kavgorodov.course.ui.model.response.ErrorMessages;
 import com.kavgorodov.course.ui.model.response.UserRest;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -41,21 +43,30 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto createUser(UserDto user) {
 
-        if (null != userRepository.findByEmail(user.getEmail())) throw new RuntimeException("Record already exists");
+        if (userRepository.findByEmail(user.getEmail()) != null)
+            throw new UserServiceException("Record already exists");
 
+        for(int i=0;i<user.getAddresses().size();i++)
+        {
+            AddressDTO address = user.getAddresses().get(i);
+            address.setUserDetails(user);
+            address.setAddressId(utils.generateAddressId(30));
+            user.getAddresses().set(i, address);
+        }
 
-        UserEntity userEntity = new UserEntity();
-        BeanUtils.copyProperties(user, userEntity);
-
-        userEntity.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        ModelMapper modelMapper = new ModelMapper();
+        UserEntity userEntity = modelMapper.map(user, UserEntity.class);
 
         String publicUserId = utils.generateUserId(30);
         userEntity.setUserId(publicUserId);
+        userEntity.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        //userEntity.setEmailVerificationToken(utils.generateEmailVerificationToken(publicUserId));
 
         UserEntity storedUserDetails = userRepository.save(userEntity);
 
-        UserDto returnValue = new UserDto();
-        BeanUtils.copyProperties(storedUserDetails, returnValue);
+        UserDto returnValue  = modelMapper.map(storedUserDetails, UserDto.class);
+
+        //amazonSES.verifyEmail(returnValue);
 
         return returnValue;
     }
